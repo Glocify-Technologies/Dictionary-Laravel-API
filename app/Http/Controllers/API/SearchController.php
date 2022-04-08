@@ -10,6 +10,9 @@ use App\Http\Requests\API\Search\KeywordRequest;
 use App\Models\Word;
 use App\Http\Resources\Search\SuggestionResource;
 use App\Http\Resources\Search\KeywordResource;
+use App\Http\Resources\suggestion\SuggestionService;
+use Response;
+
 class SearchController extends Controller
 {
     /**
@@ -51,8 +54,8 @@ class SearchController extends Controller
      */
     public function suggestions(SuggestionRequest $request)
     {
-        $suggestions = Word::where('lemma', 'LIKE', $request->keyword.'%')
-        ->get();
+        $suggestions = Word::where('lemma', 'LIKE', $request->keyword . '%')
+            ->get();
         return SuggestionResource::collection($suggestions);
     }
 
@@ -96,8 +99,17 @@ class SearchController extends Controller
     public function keywords(KeywordRequest $request)
     {
         $keywords = Word::where('lemma', $request->keyword)->with('senses.synset.lexname')
-        ->get();
+            ->get();
 
-        return KeywordResource::collection($keywords);
+        if (count($keywords) > 0) {
+            return KeywordResource::collection($keywords);
+        } else {
+            $serviceObj = new SuggestionService();
+            $sugestKey = $serviceObj->suggestion($request->get('keyword'));
+            $data = [
+                'data' => $sugestKey
+            ];
+            return Response::json($data);
+        }
     }
 }
