@@ -31,8 +31,8 @@ class SuggestionService
         ];
 
         $headers = [
-            'X-RapidAPI-Host' => 'jspell-checker.p.rapidapi.com',
-            'X-RapidAPI-Key' => '690dd7b2admsh820b135f989539ep1e57cejsnc01db4536b10',
+            'X-RapidAPI-Host' => env('RapidAPI_Host'),
+            'X-RapidAPI-Key' => env('RapidAPI_Key'),
         ];
 
         $client = new GuzzleClient([
