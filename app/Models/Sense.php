@@ -13,6 +13,20 @@ class Sense extends Model
 
     public function synset()
     {
-        return $this->hasOne(Synset::class,'synsetno', 'synsetno');
+        return $this->hasMany(Synset::class,'synsetno', 'synsetno');
+    }
+    public function sample()
+    {
+        return $this->hasOne(Sample::class,'synsetno', 'synsetno');
+    }
+
+    public function semrel()
+    {
+        return $this->hasMany(Semrel::class,'synsetno1', 'synsetno');
+    }
+
+    public function word()
+    {
+        return $this->hasOne(Word::class,'wordno', 'wordno');
     }
 }

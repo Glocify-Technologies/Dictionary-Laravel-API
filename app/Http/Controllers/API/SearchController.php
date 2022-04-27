@@ -98,7 +98,7 @@ class SearchController extends Controller
      */
     public function keywords(KeywordRequest $request)
     {
-        $keywords = Word::where('lemma', $request->keyword)->with('senses.synset.lexname')
+        $keywords = Word::where('lemma', $request->keyword)->with(['lexrel.word','lexrel.reltype','senses.synset.lexname','senses.semrel.reltype','senses.semrel.sensesWord.word','senses.sample'])
             ->get();
 
         if (count($keywords) > 0) {

@@ -18,7 +18,8 @@ class KeywordResource extends JsonResource
 
             'id' => $this->wordno,
             'word' => $this->lemma,
-            'senses'=>$this->senses
+            'senses'=>$this->senses,
+            'lexrel'=>$this->lexrel
 
         ];
     }

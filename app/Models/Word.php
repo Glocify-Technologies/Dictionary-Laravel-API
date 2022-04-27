@@ -15,4 +15,9 @@ class Word extends Model
     {
         return $this->hasMany(Sense::class,'wordno', 'wordno');
     }
+
+    public function lexrel()
+    {
+        return $this->hasMany(Lexrel::class,'wordno1', 'wordno');
+    }
 }
